@@ -97,16 +97,20 @@ def sankey_data(df) :
 
 # Function used to delete one final node of the sankey diagram (originally build to get rid of the money buffer)
 def sankey_fnode_delete(label, source, target, value, value_to_delete):
-    i = label.index(value_to_delete)
-    k = 0
-    while k == 0 :
-        if i in target :
-            j = target.index(i)
-            del source[j]
-            del target[j]
-            del value[j]
-        else :
-            k = 1
+    try:
+        i = label.index(value_to_delete)
+        k = 0
+        while k == 0 :
+            if i in target :
+                j = target.index(i)
+                del source[j]
+                del target[j]
+                del value[j]
+            else :
+                k = 1
+    except ValueError:
+        # If it already doesn't exist
+        pass
     return label, source, target, value
 
 # Old clean flow
@@ -140,8 +144,8 @@ def create_label(CSV_df) :
             label.append(var)
     return(label)
 
-files = {'BAL' : results_path+results_file_bal,
-         'OPTI' : results_path+results_file_opti}
+files = {'BAL'  : os.path.join(results_path, results_file_bal),
+         'OPTI' : os.path.join(results_path, results_file_opti)}
 
 color_sector = {'flow' : {'Fuel' : 'rgba(0, 255, 0, 0.4)',
                           'Elec' : 'rgba(0, 0, 255, 0.4)',
