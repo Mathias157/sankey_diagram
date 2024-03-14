@@ -305,7 +305,7 @@ def Plotting_oneyear_sumcountries(csv_file, Year, Options_plot) :
     countries = df['CCC'].unique().tolist()
     label2, source2, target2, value2 = [], [], [], []
     for count in countries :
-        V_FLOW_C = Import_gams(files['OPTI'], 'VFLOW_Opti_C', 'CCC', count, 'Y', '2050')
+        V_FLOW_C = Import_gams(files['OPTI'], 'VFLOW_Opti_C', 'CCC', count, 'Y', Year)
         label, source, target, value = sankey_data(V_FLOW_C)
         label, source, target, value = sankey_fnode_delete(label, source, target, value, 'Money_buffer_T')
         for i in range (len(label)) :
